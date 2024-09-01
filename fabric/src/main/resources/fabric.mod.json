@@ -11,7 +11,7 @@
     "homepage": ""
   },
   "license": "${mod_license}",
-  "icon": "assets/stop_lightning_destruction_of_item/icon.png",
+  "icon": "${mod_logo}",
   "environment": "*",
   "entrypoints": {
     "main": [

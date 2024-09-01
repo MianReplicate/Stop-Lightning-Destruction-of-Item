@@ -9,7 +9,7 @@ version = "${mod_version}"
 displayName = "${mod_name}"
 authors = "MianReplicate"
 description = "${mod_description}"
-#logoFile = ""
+logoFile = "${mod_logo}"
 
 [[dependencies.stop_lightning_destruction_of_item]]
 modId = "neoforge"

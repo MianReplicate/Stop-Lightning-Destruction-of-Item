@@ -42,6 +42,7 @@ def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/productio
 def replaceProperties = [mod_id                 : mod_id, mod_name: mod_name, mod_version: mod_version,
                          mod_authors            : mod_authors, mod_description: mod_description,
                          mod_license            : mod_license,
+                         mod_logo : mod_logo,
                          minecraft_version      : minecraft_version, fabric_loader_version: fabric_loader_version,
                          forge_version_range: forge_version_range, forge_version: forge_version, forge_loader_version_range: forge_loader_version_range
 ]
