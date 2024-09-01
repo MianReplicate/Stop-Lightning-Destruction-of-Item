@@ -4,47 +4,46 @@ evaluationDependsOn(':common')
 
 def loomPlatform = project.property('loom.platform')
 def projectName
-if(loomPlatform == 'neoforge')
-    projectName = 'NeoForge'
+if(loomPlatform == 'forge')
+    projectName = 'Forge'
 else
     projectName = 'Fabric'
 
 def generatedResources = file("src/generated/resources")
 
 sourceSets.main.resources.srcDirs = [ 'src/main/resources', {
-    project(':neoforge').file('src/generated/resources').absolutePath
+    project(':forge').file('src/generated/resources').absolutePath
 }
 ]
 
 loom {
     accessWidenerPath.set(project(":common").loom.accessWidenerPath)
-    if(loomPlatform == 'neoforge'){
+    if(loomPlatform == 'forge'){
         runs {
-            data {
-                data()
-                programArgs "--all", "--mod", "${mod_id}"
-                programArgs "--output", generatedResources.absolutePath
-            }
             client {
                 programArgs "--username", "DevGoose###"
             }
         }
 
-        mods {
-            forge {
-                sourceSet project(":neoforge").sourceSets.main
+        forge {
+            if(file("src/main/resources/${mod_id}.mixins.json").exists()) {
+                mixinConfig "${mod_id}.mixins.json"
+            }
+
+            if(getRootProject().file("common/src/main/resources/${mod_id}-common.mixins.json").exists()) {
+                mixinConfig "${mod_id}-common.mixins.json"
             }
         }
     }
 }
 
-def resourceTargets = ['fabric.mod.json', 'neoforge.mods.toml']
+def resourceTargets = ['fabric.mod.json', 'mods.toml']
 def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/bin/main/"]
 def replaceProperties = [mod_id                 : mod_id, mod_name: mod_name, mod_version: mod_version,
                          mod_authors            : mod_authors, mod_description: mod_description,
                          mod_license            : mod_license,
                          minecraft_version      : minecraft_version, fabric_loader_version: fabric_loader_version,
-                         neo_version_range: neo_version_range, neo_version: neo_version, neo_loader_version_range: neo_loader_version_range
+                         forge_version_range: forge_version_range, forge_version: forge_version, forge_loader_version_range: forge_loader_version_range
 ]
 processResources {
     inputs.properties replaceProperties
@@ -82,7 +81,7 @@ architectury {
     platformSetupLoomIde()
 
     if(loomPlatform == 'fabric') fabric()
-    else if (loomPlatform == 'neoforge') neoForge()
+    else if (loomPlatform == 'forge') forge()
 }
 
 dependencies {
@@ -92,8 +91,8 @@ dependencies {
 
         implementation 'com.electronwill.night-config:core:3.6.3'
         implementation 'com.electronwill.night-config:toml:3.6.3'
-    } else if(loomPlatform == 'neoforge'){
-        neoForge "net.neoforged:neoforge:${neo_version}"
+    } else if(loomPlatform == 'forge'){
+        forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     }
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

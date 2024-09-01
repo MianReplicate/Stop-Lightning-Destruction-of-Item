@@ -1,7 +1,7 @@
 package net.goose.stop_lightning_destruction_of_item.neoforge;
 
 import net.goose.stop_lightning_destruction_of_item.StopLightningDestructionOfItem;
-import net.neoforged.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod;
 
 @Mod(StopLightningDestructionOfItem.MOD_ID)
 public final class StopLightningDestructionOfItemNeoForge {

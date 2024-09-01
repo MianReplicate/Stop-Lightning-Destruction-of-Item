@@ -16,8 +16,8 @@ forgix {
         jarLocation = "build/libs/${mod_id}-${mod_version}.jar" // This is the location of the fabric jar from the fabric project. If this property is not defined then by default it fetches the jar with the shortest name.
     }
 
-    neoforge {
-        projectName = "neoforge"
+    forge {
+        projectName = "forge"
         jarLocation = "build/libs/${mod_id}-${mod_version}.jar" // This is the location of the forge jar from the forge project. If this property is not defined then by default it fetches the jar with the shortest name.
     }
 
@@ -46,7 +46,6 @@ subprojects {
         // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
         // See https://docs.gradle.org/current/userguide/declaring_repositories.html
         // for more information about repositories.
-        maven { url "https://maven.neoforged.net/releases/" }
         maven { url 'https://jitpack.io' }
     }
 
@@ -104,7 +103,7 @@ subprojects {
             inputs.property "${it.key}", "${it.value}"
         }
 
-        filesMatching([ '*.mixins.json', 'pack.mcmeta', 'META-INF/neoforge.mods.toml', 'fabric.mod.json', 'architectury.common.json' ]) {
+        filesMatching([ '*.mixins.json', 'pack.mcmeta', 'META-INF/mods.toml', 'fabric.mod.json', 'architectury.common.json' ]) {
             expand project.properties
         }
     }
