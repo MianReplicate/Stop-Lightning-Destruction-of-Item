@@ -1,0 +1,142 @@
+apply plugin: 'com.github.johnrengelman.shadow'
+
+evaluationDependsOn(':common')
+
+def loomPlatform = project.property('loom.platform')
+def projectName
+if(loomPlatform == 'neoforge')
+    projectName = 'NeoForge'
+else
+    projectName = 'Fabric'
+
+def generatedResources = file("src/generated/resources")
+
+sourceSets.main.resources.srcDirs = [ 'src/main/resources', {
+    project(':neoforge').file('src/generated/resources').absolutePath
+}
+]
+
+loom {
+    accessWidenerPath.set(project(":common").loom.accessWidenerPath)
+    if(loomPlatform == 'neoforge'){
+        runs {
+            data {
+                data()
+                programArgs "--all", "--mod", "${mod_id}"
+                programArgs "--output", generatedResources.absolutePath
+            }
+            client {
+                programArgs "--username", "DevGoose###"
+            }
+        }
+
+        mods {
+            forge {
+                sourceSet project(":neoforge").sourceSets.main
+            }
+        }
+    }
+}
+
+def resourceTargets = ['fabric.mod.json', 'neoforge.mods.toml']
+def intoTargets = ["$rootDir/out/production/resources/", "$rootDir/out/production/${project.name}.main/", "$rootDir/bin/main/"]
+def replaceProperties = [mod_id                 : mod_id, mod_name: mod_name, mod_version: mod_version,
+                         mod_authors            : mod_authors, mod_description: mod_description,
+                         mod_license            : mod_license,
+                         minecraft_version      : minecraft_version, fabric_loader_version: fabric_loader_version,
+                         neo_version_range: neo_version_range, neo_version: neo_version, neo_loader_version_range: neo_loader_version_range
+]
+processResources {
+    inputs.properties replaceProperties
+    replaceProperties.put 'project', project
+
+    filesMatching(resourceTargets) {
+        expand replaceProperties
+    }
+
+    intoTargets.each { target ->
+        if (file(target).exists()) {
+            copy {
+                from(sourceSets.main.resources) {
+                    include resourceTargets
+                    expand replaceProperties
+                }
+                into target
+            }
+        }
+    }
+
+}
+
+configurations {
+    common
+    shadowCommon
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    create("development${projectName}") {
+        extendsFrom common
+    }
+}
+
+architectury {
+    platformSetupLoomIde()
+
+    if(loomPlatform == 'fabric') fabric()
+    else if (loomPlatform == 'neoforge') neoForge()
+}
+
+dependencies {
+    implementation project(path: ':common')
+    if(loomPlatform == 'fabric') {
+        modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
+
+        implementation 'com.electronwill.night-config:core:3.6.3'
+        implementation 'com.electronwill.night-config:toml:3.6.3'
+    } else if(loomPlatform == 'neoforge'){
+        neoForge "net.neoforged:neoforge:${neo_version}"
+    }
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    shadowCommon(project(path: ':common', configuration: "transformProduction${projectName}")) { transitive false }
+}
+
+shadowJar {
+    exclude 'architectury.common.json'
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier = 'dev-shadow'
+}
+
+remapJar {
+    if(loomPlatform == 'fabric') {
+        injectAccessWidener = true
+    }
+
+    inputFile = shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveClassifier = null
+}
+
+jar {
+    archiveClassifier = 'dev'
+}
+
+sourcesJar {
+    def commonSources = project(':common').sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+idea.module {
+    excludeDirs += [
+            file('.gradle'),
+            file('build'),
+            file('run')
+    ]
+}

@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "package": "net.goose.stop_lightning_destruction_of_item.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "ItemEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
