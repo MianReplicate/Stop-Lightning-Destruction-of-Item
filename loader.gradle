@@ -9,15 +9,14 @@ if(loomPlatform == 'forge')
 else
     projectName = 'Fabric'
 
-def generatedResources = file("src/generated/resources")
-
 sourceSets.main.resources.srcDirs = [ 'src/main/resources', {
-    project(':forge').file('src/generated/resources').absolutePath
+    if(loomPlatform == 'fabric'){
+        project(':forge').file('src/generated/resources').absolutePath
+    }
 }
 ]
 
 loom {
-    accessWidenerPath.set(project(":common").loom.accessWidenerPath)
     if(loomPlatform == 'forge'){
         runs {
             client {
@@ -26,13 +25,7 @@ loom {
         }
 
         forge {
-            if(file("src/main/resources/${mod_id}.mixins.json").exists()) {
-                mixinConfig "${mod_id}.mixins.json"
-            }
-
-            if(getRootProject().file("common/src/main/resources/${mod_id}-common.mixins.json").exists()) {
-                mixinConfig "${mod_id}-common.mixins.json"
-            }
+            mixinConfig "${mod_id}.mixins.json"
         }
     }
 }
