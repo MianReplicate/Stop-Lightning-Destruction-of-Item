@@ -12,7 +12,7 @@ description = "${mod_description}"
 logoFile = "${mod_logo}"
 
 [[dependencies.stop_lightning_destruction_of_item]]
-modId = "neoforge"
+modId = "forge"
 mandatory = true
 versionRange = "${forge_version_range}"
 ordering = "NONE"
