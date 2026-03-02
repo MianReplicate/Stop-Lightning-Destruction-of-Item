@@ -1,0 +1,26 @@
+modLoader = "javafml"
+loaderVersion = "${forge_loader_version_range}"
+#issueTrackerURL = ""
+license = "${mod_license}"
+
+[[mods]]
+modId = "stop_lightning_destruction_of_item"
+version = "${mod_version}"
+displayName = "${mod_name}"
+authors = "MianReplicate"
+description = "${mod_description}"
+logoFile = "${mod_logo}"
+
+[[dependencies.stop_lightning_destruction_of_item]]
+modId = "forge"
+mandatory = true
+versionRange = "${forge_version_range}"
+ordering = "NONE"
+side = "SERVER"
+
+[[dependencies.stop_lightning_destruction_of_item]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${minecraft_version},)"
+ordering = "NONE"
+side = "SERVER"

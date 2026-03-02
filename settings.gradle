@@ -11,4 +11,5 @@ rootProject.name = 'stop_lightning_destruction_of_item'
 
 include 'common'
 include 'fabric'
+include 'forge'
 include 'neoforge'
