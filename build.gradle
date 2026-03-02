@@ -21,6 +21,10 @@ forgix {
         jarLocation = "build/libs/${mod_id}-${mod_version}.jar" // This is the location of the forge jar from the forge project. If this property is not defined then by default it fetches the jar with the shortest name.
     }
 
+    forge {
+        projectName = "forge"
+        jarLocation = "build/libs/${mod_id}-${mod_version}.jar"
+    }
 }
 
 architectury {
