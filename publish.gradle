@@ -33,11 +33,6 @@ publishMods {
         } else {
             minecraftVersions.add(minecraft_version)
         }
-
-        requires("common-network")
-        if(project.name != "forge"){
-            requires("forge-config-api-port-fabric")
-        }
     }
 
     var MODRINTH_TOKEN = System.getenv("modrinth_token")
@@ -52,11 +47,6 @@ publishMods {
             }
         } else {
             minecraftVersions.add(minecraft_version)
-        }
-
-        requires("common-network")
-        if(project.name != "forge"){
-            requires("forge-config-api-port")
         }
     }
 }
