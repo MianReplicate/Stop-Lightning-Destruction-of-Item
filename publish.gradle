@@ -23,6 +23,7 @@ publishMods {
     curseforge {
         accessToken = CURSE_API_KEY
         projectId = "${curseforge_id}"
+        client = false
         server = true
 
         if(minecraft_version != maximum_minecraft_version){
