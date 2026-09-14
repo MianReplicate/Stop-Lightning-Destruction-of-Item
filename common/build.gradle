@@ -24,9 +24,6 @@ neoForge {
 }
 
 dependencies {
-    implementation "mysticdrew:common-networking-common:${common_networking_version}"
-    implementation "fuzs.forgeconfigapiport:forgeconfigapiport-common-forgeapi:${forge_config_api_port_version}"
-
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
     compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: mixin_extras_version

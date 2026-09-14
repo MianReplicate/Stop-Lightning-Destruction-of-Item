@@ -15,21 +15,12 @@
   "license": "${mod_license}",
   "environment": "*",
   "entrypoints": {
-    "main": [
-      "mc.mian.templatemod.fabric.TemplateModFabric"
-    ],
-    "client": [
-      "mc.mian.templatemod.fabric.TemplateModFabricClient"
-    ]
   },
   "mixins": [
     "${mod_id}-common.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${fabric_loader_version}",
-    "fabric": ">=${fabric_api_version}",
-    "minecraft": ">=${minecraft_version}",
-    "commonnetworking" : ">=${common_networking_version}",
-    "forgeconfigapiport": ">=${forge_config_api_port_version}"
+    "minecraft": ">=${minecraft_version}"
   }
 }

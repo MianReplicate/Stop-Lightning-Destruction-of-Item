@@ -104,7 +104,6 @@ processResources {
             mod_license: mod_license,
             minecraft_version: minecraft_version,
             fabric_loader_version: fabric_loader_version,
-            fabric_api_version: fabric_api_version,
             repository_url: repository_url,
             neo_version_range: neo_version_range,
             neo_version: neo_version,
@@ -112,8 +111,6 @@ processResources {
             forge_version_range : forge_version_range,
             forge_version: forge_version,
             forge_loader_version_range: forge_loader_version_range,
-            common_networking_version: common_networking_version,
-            forge_config_api_port_version: forge_config_api_port_version,
             maximum_minecraft_version: maximum_minecraft_version
     ]
 

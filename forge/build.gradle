@@ -70,8 +70,6 @@ dependencies {
         jarJar.ranged(it, "[${mixin_extras_version},)")
     }
 
-    implementation("mysticdrew:common-networking-forge:${common_networking_version}")
-
     // Forge's hack fix
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 }
